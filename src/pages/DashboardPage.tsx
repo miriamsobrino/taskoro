@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { TaskTabs } from '@/components/TaskTabs';
 import { Button } from '@/components/ui/button';
 import { UserProfile } from '@/components/UserProfile';
-import { CirclePlus, Coins, LogOut, Star, Trophy } from 'lucide-react';
+import { CirclePlus, Coins, Star, Trophy } from 'lucide-react';
 import { AchievementsTabs } from '@/components/AchievementsTabs';
 import { AlertThemed } from '@/components/AlertThemed';
 import { DialogShop } from '@/components/DialogShop';
@@ -16,7 +16,6 @@ import { useAuthContext } from '@/context/AuthContex';
 import { useNavigate } from 'react-router-dom';
 import { ItemCard } from '@/components/ItemCard';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
 import { useAppContext } from '@/context/AppContext';
 
 export function DashboardPage() {
@@ -27,9 +26,7 @@ export function DashboardPage() {
   const { tasks, isTaskFormOpen, setTasks, addTask, deleteTask, openTaskForm, closeTaskForm } = useTasks(today);
   const { achievements, completeTask, onClaimReward } = useAchievements(showAlert);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [isShowProfileMenu, setIsShowProfileMenu] = useState(false);
-  const { logOut } = useAuthContext();
-  const menuRef = useRef<HTMLDivElement>(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -14,7 +14,7 @@ interface AchievementCardProps {
 }
 export const AchievementCard = ({ achievement, onClaimReward }: AchievementCardProps) => {
   const { user } = useAuthContext();
-  const { achievements, isAchievementClaimed, setAchievements } = useAppContext();
+  const { achievements, setAchievements } = useAppContext();
   useEffect(() => {
     if (!user) return;
 
