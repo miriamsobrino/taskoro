@@ -57,15 +57,16 @@ export const UserProfile = () => {
     navigate('/');
   };
   return (
-    <div className='h-auto md:h-screen flex md:flex-col items-center justify-center gap-4 pt-4 md:pt-0 md:gap-8 md:px-6 relative'>
-      <div className='flex flex-col items-center '>
+    <div className='h-auto md:h-screen flex flex-col items-start md:items-center justify-center gap-4 pt-4 md:pt-0 md:gap-8 md:px-6 relative'>
+      <div className='flex gap-2 md:gap-0 md:flex-col items-center '>
         <Avatar className='w-12 h-12 md:h-24 md:w-24 border-1 border-primary'>
           <AvatarImage src={user?.photoURL ?? undefined} alt='Avatar' />
           <AvatarFallback className=''>{user?.displayName?.[0] ?? 'CN'}</AvatarFallback>
         </Avatar>
-        {screenWidth > 768 && (
-          <h2 className='text-xl font-bold mt-2'>@{user?.displayName?.split(' ').join('_').toLowerCase()}</h2>
-        )}
+
+        <h2 className='text-base md:text-xl font-bold mt-2'>
+          @{user?.displayName?.split(' ').join('_').toLowerCase()}
+        </h2>
       </div>
       <div className='flex md:flex-col w-full justify-between gap-2 md:gap-6 bg-card border p-4 rounded-md'>
         <div className='flex flex-col gap-3'>
@@ -74,12 +75,10 @@ export const UserProfile = () => {
               <Trophy size={18} />
               <span className='font-semibold text-sm md:text-base'>Nivel {currentUserLevel}</span>
             </div>
-            {screenWidth > 768 ? (
+            {screenWidth > 768 && (
               <span className='text-sm text-muted-foreground'>
                 {userXP}/{totalXP} XP
               </span>
-            ) : (
-              ''
             )}
           </div>
           {screenWidth > 768 && <Progress value={(userXP / totalXP) * 100} />}
@@ -108,11 +107,10 @@ export const UserProfile = () => {
           )}
         </div>
       </div>
-      {screenWidth > 768 && (
-        <Button onClick={handleSignOut} className='absolute bottom-20 cursor-pointer'>
-          Cerrar sesión
-        </Button>
-      )}
+
+      <Button onClick={handleSignOut} className='absolute md:bottom-20 right-0 top-6 cursor-pointer'>
+        Cerrar sesión
+      </Button>
     </div>
   );
 };

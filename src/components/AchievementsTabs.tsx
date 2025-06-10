@@ -14,7 +14,7 @@ export const AchievementsTabs = ({ achievements, onClaimReward }: AchievementsTa
   const sortAchievements = [...achievements].sort((a, b) => Number(b.unlocked) - Number(a.unlocked));
   return (
     <Tabs defaultValue='all' className='w-full overflow-y-auto max-h-screen pb-72'>
-      <TabsList className='grid grid-cols-5 mb-4 w-full '>
+      <TabsList className='grid grid-cols-5 mb-4 w-full sticky top-0 z-20'>
         <TabsTrigger value='all' className='cursor-pointer'>
           Todos
         </TabsTrigger>
