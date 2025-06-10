@@ -3,7 +3,7 @@ import { Navigation } from '@/components/Navigation';
 import { TaskTabs } from '@/components/TaskTabs';
 import { Button } from '@/components/ui/button';
 import { UserProfile } from '@/components/UserProfile';
-import { CirclePlus, Coins, Star, Trophy } from 'lucide-react';
+import { CirclePlus } from 'lucide-react';
 import { AchievementsTabs } from '@/components/AchievementsTabs';
 import { AlertThemed } from '@/components/AlertThemed';
 import { DialogShop } from '@/components/DialogShop';
@@ -15,8 +15,6 @@ import { useAlerts } from '@/hooks/useAlerts';
 import { useAuthContext } from '@/context/AuthContex';
 import { useNavigate } from 'react-router-dom';
 import { ItemCard } from '@/components/ItemCard';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useAppContext } from '@/context/AppContext';
 
 export function DashboardPage() {
   const [activeTab, setActiveTab] = useState('tasks');
@@ -56,7 +54,6 @@ export function DashboardPage() {
     removeInventoryItems,
     removeShopItems,
   } = useShop(showAlert);
-  const { currentUserLevel, currentAchievements } = useAppContext();
 
   const handleCompleteTask = (taskId: string) => {
     completeTask(taskId, tasks, setTasks);
@@ -65,43 +62,9 @@ export function DashboardPage() {
   return (
     <div className='flex flex-col h-screen bg-background w-full justify-center '>
       <div className='flex flex-col w-full md:flex-row  flex-1 h-full overflow-hidden'>
-        {screenWidth > 768 ? (
-          <aside className='w-full md:w-80 border-r bg-muted/40 p-4 '>
-            <UserProfile />
-          </aside>
-        ) : (
-          <div className='w-full gap-3  p-4 flex justify-start items-center '>
-            <div className=''>
-              <Avatar className='h-10 w-10 '>
-                <AvatarImage src={user?.photoURL ?? undefined} alt='Avatar' />
-                <AvatarFallback>{user?.displayName?.[0] ?? ''}</AvatarFallback>
-              </Avatar>
-            </div>
-            <div className='flex w-full gap-3 bg-card border justify-center items-center p-4 rounded-md'>
-              <div className='flex flex-col gap-1'>
-                <div className='flex justify-between '>
-                  <div className='flex gap-2 items-center'>
-                    <Trophy size={18} />
-                    <span className='font-semibold text-sm'>Nivel {currentUserLevel}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className='flex justify-between'>
-                <div className='flex gap-1 items-center'>
-                  <Coins size={18} className=' text-yellow-500' />
-                  <span className='font-semibold text-sm'>{totalCoins} Monedas</span>
-                </div>
-              </div>
-              <div className='flex justify-between'>
-                <div className='flex gap-1 items-center'>
-                  <Star size={18} className='text-violet-500' />
-                  <span className='font-semibold text-sm'>{currentAchievements} Logros</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <aside className='w-full  px-4 md:px-0 md:w-80 border-r bg-muted/40 p-4 '>
+          <UserProfile />
+        </aside>
 
         <section className='flex-1 flex-col relative '>
           <Navigation activeTab={activeTab} onChangeTab={setActiveTab} />
@@ -115,9 +78,9 @@ export function DashboardPage() {
                 </div>
                 <Button
                   onClick={openTaskForm}
-                  className='cursor-pointer px-2! rounded-md fixed bottom-8 right-6 md:static md:inline-flex'
+                  className='cursor-pointer px-2! py-5! rounded-md fixed bottom-8 right-6 md:static md:inline-flex'
                 >
-                  <CirclePlus className='size-6 md:size-5' /> {screenWidth > 1024 && <span>Añadir tarea</span>}
+                  <CirclePlus className='size-7 md:size-5' /> {screenWidth > 1024 && <span>Añadir tarea</span>}
                 </Button>
               </div>
 
@@ -146,9 +109,9 @@ export function DashboardPage() {
                 </div>
                 <Button
                   onClick={openShopForm}
-                  className='cursor-pointer px-2! rounded-md fixed bottom-8 right-6 md:static md:inline-flex'
+                  className='cursor-pointer px-2! py-5! rounded-md fixed bottom-8 right-6 md:static md:inline-flex'
                 >
-                  <CirclePlus className='size-6 md:size-5' /> {screenWidth > 1024 && <span>Añadir item</span>}
+                  <CirclePlus className='size-7 md:size-5' /> {screenWidth > 1024 && <span>Añadir item</span>}
                 </Button>
               </div>
               <div className='space-y-4 grid-cols-1 md:grid-cols-2 grid gap-4'>
