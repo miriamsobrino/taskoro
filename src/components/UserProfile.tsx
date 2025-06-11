@@ -108,7 +108,10 @@ export const UserProfile = () => {
         </div>
       </div>
 
-      <Button onClick={handleSignOut} className='absolute md:bottom-20 right-0 top-6 cursor-pointer'>
+      <Button
+        onClick={handleSignOut}
+        className='absolute md:bottom-20 md:top-auto md:right-auto right-0 top-6 cursor-pointer'
+      >
         Cerrar sesión
       </Button>
     </div>
