@@ -35,7 +35,7 @@ export const DialogTasks = ({ title, description, isOpen, onClose, addTask }: Di
     const handleResize = () => {
       if (visualViewport) {
         const heightDiff = window.innerHeight - visualViewport.height;
-        setKeyboardVisible(heightDiff > 150); // Umbral típico de teclado
+        setKeyboardVisible(heightDiff > 150);
       }
     };
 
@@ -69,7 +69,12 @@ export const DialogTasks = ({ title, description, isOpen, onClose, addTask }: Di
   };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className={`${keyboardVisible ? 'mb-[300px]' : ''}`}>
+      <DialogContent
+        style={{
+          transform: keyboardVisible ? 'translateY(-150px)' : 'translateY(0)',
+          transition: 'transform 0.3s ease-in-out',
+        }}
+      >
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
