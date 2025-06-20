@@ -72,7 +72,6 @@ export const DialogTasks = ({ title, description, isOpen, onClose, addTask }: Di
       <DialogContent
         style={{
           transform: keyboardVisible ? 'translateY(-150px)' : 'translateY(0)',
-          transition: 'transform 0.3s ease-in-out',
         }}
       >
         <DialogHeader>
