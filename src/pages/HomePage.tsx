@@ -22,7 +22,7 @@ export function HomePage() {
           <h1 className='font-jost text-5xl font-medium'>Taskoro</h1>
           <h2 className='text-2xl'>Convierte tus tareas en una aventura diaria.</h2>
         </div>
-        <Button onClick={handleSignIn} className='w-fit cursor-pointer text-md'>
+        <Button onClick={handleSignIn} className='w-fit cursor-pointer text-lg'>
           Empezar ahora
         </Button>
       </div>
