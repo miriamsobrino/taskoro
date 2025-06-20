@@ -9,7 +9,7 @@ import {
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { Task } from '@/types/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
@@ -28,6 +28,7 @@ export const DialogTasks = ({ title, description, isOpen, onClose, addTask }: Di
   const [difficulty, setDifficulty] = useState('2');
   const [isDaily, setIsDaily] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const visualViewport = window.visualViewport;
@@ -45,20 +46,12 @@ export const DialogTasks = ({ title, description, isOpen, onClose, addTask }: Di
       visualViewport?.removeEventListener('resize', handleResize);
     };
   }, []);
+
   useEffect(() => {
-    const input = document.getElementById('name');
-
-    const handleFocus = () => setKeyboardVisible(true);
-    const handleBlur = () => setKeyboardVisible(false);
-
-    input?.addEventListener('focus', handleFocus);
-    input?.addEventListener('blur', handleBlur);
-
-    return () => {
-      input?.removeEventListener('focus', handleFocus);
-      input?.removeEventListener('blur', handleBlur);
-    };
-  }, []);
+    if (keyboardVisible && inputRef.current) {
+      inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [keyboardVisible]);
 
   const resetForm = () => {
     setName('');
@@ -85,7 +78,7 @@ export const DialogTasks = ({ title, description, isOpen, onClose, addTask }: Di
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         style={{
-          transform: keyboardVisible ? 'translateY(-150px)' : 'translateY(0)',
+          transform: keyboardVisible ? 'translateY(-100px)' : 'translateY(0)',
         }}
       >
         <DialogHeader>
@@ -96,6 +89,7 @@ export const DialogTasks = ({ title, description, isOpen, onClose, addTask }: Di
         <div className='space-y-4'>
           <Label htmlFor='name'>Título</Label>
           <Input
+            ref={inputRef}
             id='name'
             placeholder='¿Qué tarea quieres añadir?'
             value={name}
