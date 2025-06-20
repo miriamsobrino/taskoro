@@ -60,7 +60,7 @@ export function DashboardPage() {
   };
 
   return (
-    <div className='flex flex-col min-h-[100dvh] bg-background w-full justify-center '>
+    <div className='flex flex-col h-screen bg-background w-full justify-center '>
       <div className='flex flex-col w-full md:flex-row  flex-1 h-full overflow-hidden'>
         <aside className='w-full  px-4 md:px-0 md:w-80 border-r bg-muted/40 p-4 '>
           <UserProfile />
