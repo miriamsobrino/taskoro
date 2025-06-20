@@ -9,7 +9,7 @@ import {
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { Task } from '@/types/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
@@ -27,6 +27,25 @@ export const DialogTasks = ({ title, description, isOpen, onClose, addTask }: Di
   const [name, setName] = useState('');
   const [difficulty, setDifficulty] = useState('2');
   const [isDaily, setIsDaily] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const visualViewport = window.visualViewport;
+
+    const handleResize = () => {
+      if (visualViewport) {
+        const heightDiff = window.innerHeight - visualViewport.height;
+        setKeyboardVisible(heightDiff > 150); // Umbral típico de teclado
+      }
+    };
+
+    visualViewport?.addEventListener('resize', handleResize);
+
+    return () => {
+      visualViewport?.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const resetForm = () => {
     setName('');
     setDifficulty('2');
@@ -50,7 +69,7 @@ export const DialogTasks = ({ title, description, isOpen, onClose, addTask }: Di
   };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className={`${keyboardVisible ? 'mb-[300px]' : ''}`}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>

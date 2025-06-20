@@ -59,7 +59,7 @@ export const UserProfile = () => {
   return (
     <div className='h-auto md:h-screen flex flex-col items-start md:items-center justify-center gap-4 pt-4 md:pt-0 md:gap-8 md:px-6 relative'>
       <div className='flex gap-2 md:gap-0 md:flex-col items-center '>
-        <Avatar className='w-12 h-12 md:h-24 md:w-24 border-1 border-primary'>
+        <Avatar className='w-16 h-16 md:h-24 md:w-24 '>
           <AvatarImage src={user?.photoURL ?? undefined} alt='Avatar' />
           <AvatarFallback className=''>{user?.displayName?.[0] ?? 'CN'}</AvatarFallback>
         </Avatar>
@@ -110,7 +110,7 @@ export const UserProfile = () => {
 
       <Button
         onClick={handleSignOut}
-        className='absolute md:bottom-20 md:top-auto md:right-auto right-0 top-6 cursor-pointer'
+        className='absolute md:bottom-20 md:top-auto md:right-auto right-0 top-8 cursor-pointer'
       >
         Cerrar sesión
       </Button>
