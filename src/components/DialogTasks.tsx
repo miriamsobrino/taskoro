@@ -45,6 +45,20 @@ export const DialogTasks = ({ title, description, isOpen, onClose, addTask }: Di
       visualViewport?.removeEventListener('resize', handleResize);
     };
   }, []);
+  useEffect(() => {
+    const input = document.getElementById('name');
+
+    const handleFocus = () => setKeyboardVisible(true);
+    const handleBlur = () => setKeyboardVisible(false);
+
+    input?.addEventListener('focus', handleFocus);
+    input?.addEventListener('blur', handleBlur);
+
+    return () => {
+      input?.removeEventListener('focus', handleFocus);
+      input?.removeEventListener('blur', handleBlur);
+    };
+  }, []);
 
   const resetForm = () => {
     setName('');
