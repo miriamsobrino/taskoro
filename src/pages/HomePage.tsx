@@ -70,7 +70,7 @@ export function HomePage() {
               <Brain className='w-8 h-8 text-white' />
             </div>
             <h3 className='text-xl font-bold text-black'>Construye hábitos duraderos</h3>
-            <p className='text-gray-600'>La constancia ahora tiene premios.</p>
+            <p className='text-gray-600'>La constancia crea disciplina.</p>
           </Card>
         </div>
       </div>
