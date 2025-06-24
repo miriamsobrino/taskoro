@@ -92,7 +92,7 @@ export const useAchievements = (showAlert: (title: string, description: string) 
       setTotalCoins(newCoins);
       await updateUserStats(user.uid, {
         level: newLevel,
-        userXP: newXP,
+        userXP: overflowXP,
         totalXP: totalXP + 50,
         coins: totalCoins + coinsReward + 50,
       });
@@ -111,28 +111,43 @@ export const useAchievements = (showAlert: (title: string, description: string) 
 
   const onClaimReward = async (achievementId: string) => {
     if (!user) return;
+
     const achievement = achievements.find((a) => a.id === achievementId);
-    if (!achievement || !achievement.unlocked) return;
-    const newUserXP = userXP + achievement.reward.experience;
-    const newTotalCoins = totalCoins + achievement.reward.coins;
-    const overflowXP = newUserXP - totalXP;
-    const newLevel = currentUserLevel + 1;
-    const newTotalXP = totalXP + 50;
-    setUserXP(newUserXP);
-    setTotalCoins(newTotalCoins);
+    if (!achievement || !achievement.unlocked || achievement.claimed) return;
+
+    const xpReward = achievement.reward.experience;
+    const coinReward = achievement.reward.coins;
+
+    let updatedXP = userXP + xpReward;
+    let updatedLevel = currentUserLevel;
+    let updatedTotalXP = totalXP;
+    let updatedCoins = totalCoins + coinReward;
+
+    // Verificar si se sube de nivel
+    if (updatedXP >= totalXP) {
+      const overflowXP = updatedXP - totalXP;
+      updatedXP = overflowXP;
+      updatedLevel += 1;
+      updatedTotalXP += 50;
+      updatedCoins += 50;
+      setCurrentUserLevel(updatedLevel);
+      setTotalXP(updatedTotalXP);
+      showAlert('¡Enhorabuena!', `Has subido al nivel ${updatedLevel} y has ganado 50 monedas.`);
+    }
+
+    // Actualizar estado en memoria
+    setUserXP(updatedXP);
+    setTotalCoins(updatedCoins);
     setAchievements((prevAch) => prevAch.map((ach) => (ach.id === achievementId ? { ...ach, claimed: true } : ach)));
     setIsAchievementClaimed(true);
-    if (newUserXP >= totalXP) {
-      setUserXP(overflowXP);
-      setCurrentUserLevel(newLevel);
-      setTotalXP(newTotalXP);
-    }
+
+    // Actualizar Firebase
     await updateUserAchievement(user.uid, achievementId, { claimed: true });
     await updateUserStats(user.uid, {
-      level: newLevel,
-      userXP: overflowXP,
-      totalXP: newTotalXP,
-      coins: newTotalCoins,
+      level: updatedLevel,
+      userXP: updatedXP,
+      totalXP: updatedTotalXP,
+      coins: updatedCoins,
     });
   };
 
