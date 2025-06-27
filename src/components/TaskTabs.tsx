@@ -14,8 +14,13 @@ export const TaskTabs = ({ tasks, onDeleteTask, onCompleteTask }: TasksTabsProps
   const pendingTasks = tasks.filter((task) => !task.completed);
   const { loading } = useAppContext();
   return (
-    <Tabs defaultValue='all' className='w-full overflow-y-auto h-screen pb-72'>
-      <TabsList className='grid grid-cols-4 mb-4  w-full sticky top-0 '>
+    <Tabs
+      defaultValue='all'
+      className={`w-full overflow-y-auto [&::-webkit-scrollbar]:hidden
+  [-ms-overflow-style:'none']
+  [scrollbar-width:'none']  h-screen pb-72`}
+    >
+      <TabsList className='grid grid-cols-4 mb-4 w-full sticky top-0 '>
         <TabsTrigger value='all' className='cursor-pointer'>
           Todas
         </TabsTrigger>
