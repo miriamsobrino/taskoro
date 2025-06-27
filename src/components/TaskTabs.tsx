@@ -30,7 +30,7 @@ export const TaskTabs = ({ tasks, onDeleteTask, onCompleteTask }: TasksTabsProps
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value='all' className='space-y-4'>
+      <TabsContent value='all' className='space-y-4 '>
         {loading ? (
           <div className='w-full flex flex-col items-center  '>
             <span className='loader' />

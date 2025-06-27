@@ -70,7 +70,7 @@ export function DashboardPage() {
           <Navigation activeTab={activeTab} onChangeTab={setActiveTab} />
 
           {activeTab === 'tasks' && (
-            <div className='w-full lg:px-40 xl:px-80 px-4 py-8 md:py-20 gap-8  justify-center flex flex-col items-center relative'>
+            <div className='w-full lg:px-40 xl:px-80 px-4 h-screen py-8 md:py-20 gap-8  justify-center flex flex-col items-center relative'>
               <div className='flex justify-between w-full items-center  '>
                 <div className='flex flex-col gap-2'>
                   <h1 className='text-3xl font-bold tracking-tight'>Mis Tareas</h1>
