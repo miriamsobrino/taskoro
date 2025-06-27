@@ -9,7 +9,7 @@ import {
 import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { ShopItem } from '@/types/types';
 
@@ -24,6 +24,32 @@ interface DialogShopProps {
 export const DialogShop = ({ title, description, isOpen, onClose, addItem }: DialogShopProps) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const visualViewport = window.visualViewport;
+
+    const handleResize = () => {
+      if (visualViewport) {
+        const heightDiff = window.innerHeight - visualViewport.height;
+        setKeyboardVisible(heightDiff > 150);
+      }
+    };
+
+    visualViewport?.addEventListener('resize', handleResize);
+
+    return () => {
+      visualViewport?.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (keyboardVisible && inputRef.current) {
+      inputRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [keyboardVisible]);
+
   const resetForm = () => {
     setName('');
     setPrice(0);
@@ -51,6 +77,7 @@ export const DialogShop = ({ title, description, isOpen, onClose, addItem }: Dia
         <div className='space-y-4 my-2'>
           <Label htmlFor='name'>Nombre del item</Label>
           <Input
+            ref={inputRef}
             id='name'
             placeholder='¿Qué item quieres añadir?'
             value={name}
@@ -59,6 +86,7 @@ export const DialogShop = ({ title, description, isOpen, onClose, addItem }: Dia
           />
           <Label htmlFor='price'>Precio</Label>
           <Input
+            ref={inputRef}
             id='price'
             type='number'
             placeholder='¿Cuántas monedas?'
